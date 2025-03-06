@@ -65,16 +65,13 @@ func daysDifference(targetDate string) (int, error) {
 //-----------------------------------------------------------------------------
 
 func main() {
-	var exitCode int
-	var statusText string
-
 	// No domain given
 	if domain == "" {
 		log.Fatal("Domain argument is required")
 	}
 
 	// Query the whois servers
-	raw, err := whois.Whois(domain)
+	raw, err := whois.Whois(domain)	
 	if err != nil {
 		tracerr.PrintSource(err)
 		log.Fatalf("Whois query failed: %s", err.Error())
@@ -100,6 +97,9 @@ func main() {
 	// Prepare performance data
 	perfdata := fmt.Sprintf("expires=%s", result.Domain.ExpirationDate)
 
+	var exitCode int
+	var statusText string
+	
 	// Set the status for Nagios
 	if daysLeft <= crit {
 		exitCode = 2 // Critical
