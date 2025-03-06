@@ -71,7 +71,7 @@ func main() {
 	}
 
 	// Query the whois servers
-	raw, err := whois.Whois(domain)	
+	raw, err := whois.Whois(domain)
 	if err != nil {
 		tracerr.PrintSource(err)
 		log.Fatalf("Whois query failed: %s", err.Error())
@@ -99,7 +99,7 @@ func main() {
 
 	var exitCode int
 	var statusText string
-	
+
 	// Set the status for Nagios
 	if daysLeft <= crit {
 		exitCode = 2 // Critical
