@@ -1,3 +1,19 @@
+/*
+Copyright 2025 Rodolfo González González
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
 package main
 
 import (
@@ -15,6 +31,7 @@ import (
 
 //-----------------------------------------------------------------------------
 
+// CLI parameters
 var (
 	domain string
 	warn   int
@@ -23,7 +40,9 @@ var (
 
 //-----------------------------------------------------------------------------
 
+// Init!
 func init() {
+	// Parse command line parameters
 	pflag.StringVarP(&domain, "domain", "D", "", "Domain to check")
 	pflag.IntVarP(&warn, "warn", "w", 30, "Warning threshold in days")
 	pflag.IntVarP(&crit, "crit", "c", 15, "Critical threshold days")
@@ -64,24 +83,43 @@ func daysDifference(targetDate string) (int, error) {
 
 //-----------------------------------------------------------------------------
 
+// Run, Lola, Run!
 func main() {
 	// No domain given
 	if domain == "" {
 		log.Fatal("Domain argument is required")
 	}
 
+	// Get the whois server for the given domain
+	ws := NewWhoisServers()
+	var server string
+	var exists bool
+	if server, exists = ws.GetWhoisServer(domain); !exists {
+		server = "whois.iana.org"
+	}
+
 	// Query the whois servers
-	raw, err := whois.Whois(domain)
+	raw, err := whois.Whois(domain, server)
 	if err != nil {
 		tracerr.PrintSource(err)
-		log.Fatalf("Whois query failed: %s", err.Error())
+		nr := nagios.NagiosResult{
+			ExitCode: 3,
+			Text:     fmt.Sprintf("Whois query failed: %s", err.Error()),
+			Perfdata: "",
+		}
+		nagios.NagiosExit(nr)
 	}
 
 	// Parse the whois raw response data
 	result, err := whoisparser.Parse(raw)
 	if err != nil {
 		tracerr.PrintSource(err)
-		log.Fatalf("Whois output could not be parsed: %s", err.Error())
+		nr := nagios.NagiosResult{
+			ExitCode: 3,
+			Text:     fmt.Sprintf("Whois output could not be parsed: %s", err.Error()),
+			Perfdata: "",
+		}
+		nagios.NagiosExit(nr)
 	}
 
 	// Get the expiration date
@@ -91,12 +129,18 @@ func main() {
 	daysLeft, err := daysDifference(date)
 	if err != nil {
 		tracerr.PrintSource(err)
-		log.Fatalf("Could not calculate date difference: %s", err.Error())
+		nr := nagios.NagiosResult{
+			ExitCode: 3,
+			Text:     fmt.Sprintf("Could not calculate date difference: %s", err.Error()),
+			Perfdata: "",
+		}
+		nagios.NagiosExit(nr)
 	}
 
 	// Prepare performance data
 	perfdata := fmt.Sprintf("expires=%s", result.Domain.ExpirationDate)
 
+	// Return variables for Nagios
 	var exitCode int
 	var statusText string
 
