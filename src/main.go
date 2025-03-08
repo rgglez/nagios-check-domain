@@ -33,9 +33,10 @@ import (
 
 // CLI parameters
 var (
-	domain string
-	warn   int
-	crit   int
+	domain  string
+	warn    int
+	crit    int
+	servers string
 )
 
 //-----------------------------------------------------------------------------
@@ -46,6 +47,7 @@ func init() {
 	pflag.StringVarP(&domain, "domain", "D", "", "Domain to check")
 	pflag.IntVarP(&warn, "warn", "w", 30, "Warning threshold in days")
 	pflag.IntVarP(&crit, "crit", "c", 15, "Critical threshold days")
+	pflag.StringVarP(&servers, "servers", "s", "", "Path to the whois servers list file")
 	pflag.Parse()
 }
 
@@ -91,7 +93,7 @@ func main() {
 	}
 
 	// Get the whois server for the given domain
-	ws := NewWhoisServers()
+	ws := NewWhoisServers(servers)
 	var server string
 	var exists bool
 	if server, exists = ws.GetWhoisServer(domain); !exists {

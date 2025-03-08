@@ -18,6 +18,7 @@ tries its best to query the right server for the publix suffix or TLD.
 * `--domain` `-D` string, the domain name to check.
 * `--warn` `-w` integer, the number of days after which a warning will be considered a warning condition. Default: 30.
 * `--crit` `-c` integer, the number of days after which a warning will be considered a critical condition. Default: 15.
+* `--servers` `-s` string, the path to the file containing the list of WHOIS servers.
 
 ## Build and installation
 
@@ -48,12 +49,26 @@ Or just copy the executable to your regular Nagios plugins directory.
 
 ## Execution
 
-Example:
+Basic example using default server (whois.iana.org):
 
 ```bash
-$ check_domain -D example.com
+check_domain -D example.com
 OK: Domain will expire in 159 days|expires=2025-08-13T04:00:00Z
 ```
+
+Using the `servers.json` file:
+
+```bash
+check_domain -D example.com --servers=/path/to/servers.json
+```
+
+## Server list
+
+A list of WHOIS servers is included in the [data/servers.json](data/servers.json) file.
+This is a JSON file which has the [TLD](https://en.wikipedia.org/wiki/Top-level_domain) 
+as the key and the corresponding WHOIS server as the value.
+
+You can provide your own file. See the command line options above.
 
 ## Dependencies
 
