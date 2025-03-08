@@ -103,9 +103,6 @@ func main() {
 
 	// Query the whois servers
 	raw, err := whois.Whois(domain, server)
-
-	pretty.Println(raw)
-
 	if err != nil {
 		tracerr.PrintSource(err)
 		nr := nagios.NagiosResult{
