@@ -22,6 +22,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/kr/pretty"
 	"github.com/likexian/whois"
 	whoisparser "github.com/likexian/whois-parser"
 	"github.com/spf13/pflag"
@@ -102,6 +103,9 @@ func main() {
 
 	// Query the whois servers
 	raw, err := whois.Whois(domain, server)
+
+	pretty.Println(raw)
+
 	if err != nil {
 		tracerr.PrintSource(err)
 		nr := nagios.NagiosResult{
