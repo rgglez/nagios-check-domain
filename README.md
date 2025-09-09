@@ -4,7 +4,7 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/rgglez/nagios-check-domain/total)
 ![GitHub issues](https://img.shields.io/github/issues/rgglez/nagios-check-domain)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/rgglez/nagios-check-domain)
-[![Go Report Card](https://goreportcard.com/badge/github.com/rgglez/nagios-check-domain)](https://goreportcard.com/report/github.com/rgglez/nagios-check-domain)
+[![Go Report Card](https://goreportcard.com/badge/github.com/rgglez/nagios-check-domain/src)](https://goreportcard.com/report/github.com/rgglez/nagios-check-domain/src)
 [![GitHub release](https://img.shields.io/github/release/rgglez/nagios-check-domain.svg)](https://github.com/rgglez/nagios-check-domain/releases/)
 ![GitHub stars](https://img.shields.io/github/stars/rgglez/nagios-check-domain?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/rgglez/nagios-check-domain?style=social)
