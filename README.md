@@ -87,4 +87,4 @@ This program has the following external dependencies:
 
 Copyright 2025 Rodolfo González González.
 
-[GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html). Please read the [LICENSE](LICENSE.md) file.
+This program is licensed under the terms of the [GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html). Please read the [LICENSE](LICENSE.md) file.
