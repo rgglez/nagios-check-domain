@@ -11,7 +11,7 @@
 expiration date of a given domain and notify if it is about to expire.
 
 This plugin queries public [whois](https://www.rfc-editor.org/rfc/rfc3912.txt) servers. It
-tries its best to query the right server for the publix suffix or TLD.
+tries its best to query the right server for the public suffix or TLD.
 
 ## Command line options
 
@@ -65,7 +65,7 @@ check_domain -D example.com --servers=/path/to/servers.json
 ## Server list
 
 A list of WHOIS servers is included in the [data/servers.json](data/servers.json) file.
-This is a JSON file which has the [TLD](https://en.wikipedia.org/wiki/Top-level_domain) 
+This is a JSON file which has the [TLD](https://en.wikipedia.org/wiki/Top-level_domain)
 as the key and the corresponding WHOIS server as the value.
 
 You can provide your own file. See the command line options above.
